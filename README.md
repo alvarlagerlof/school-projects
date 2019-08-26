@@ -1,3 +1,3 @@
 # school-projects
 
-Use hoverver you want
+Some simple projects for a school course, use however you want.
