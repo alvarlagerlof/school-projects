@@ -1,0 +1,11 @@
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/bin/Debug/netcoreapp2.1/hello-world.deps.json
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/bin/Debug/netcoreapp2.1/hello-world.runtimeconfig.json
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/bin/Debug/netcoreapp2.1/hello-world.runtimeconfig.dev.json
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/bin/Debug/netcoreapp2.1/hello-world.dll
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/bin/Debug/netcoreapp2.1/hello-world.pdb
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/obj/Debug/netcoreapp2.1/hello-world.csprojAssemblyReference.cache
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/obj/Debug/netcoreapp2.1/hello-world.csproj.CoreCompileInputs.cache
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/obj/Debug/netcoreapp2.1/hello-world.AssemblyInfoInputs.cache
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/obj/Debug/netcoreapp2.1/hello-world.AssemblyInfo.cs
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/obj/Debug/netcoreapp2.1/hello-world.dll
+/Users/alvar-mac/git/school-projects/c-sharp/hello-world/obj/Debug/netcoreapp2.1/hello-world.pdb

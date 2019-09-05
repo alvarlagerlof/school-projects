@@ -1,0 +1,11 @@
+cat
+dog
+mat
+head
+body
+foot
+hand
+table
+leg
+lemon
+orange
