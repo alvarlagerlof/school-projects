@@ -1,0 +1,322 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Playfair Display";
+    font-weight: 300;
+}
+
+:root {
+    --theme-color: rgb(233, 69, 40);
+    --text-color-grey: rgb(87, 87, 87);
+    --text-color-grey-dark: rgb(206, 206, 206);
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+nav.menu {
+    position: fixed;
+    top: 0;
+    background: white;
+    padding: 16px 64px;
+    width: 100%;
+    border-bottom: 3px solid rgb(230, 230, 230);
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+nav.menu h1 {
+    font-family: "Big Shoulders Display";
+    font-size: 40px;
+    background: var(--theme-color);
+    color: white;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 700;
+    clip-path: polygon(
+        0 0, /* left top */
+        100% 0, /* right top */ 
+        100% 100%, /* right bottom */
+        0 90% /* left bottom */
+    );
+}
+
+nav.menu ul {
+    list-style-type: none;
+}
+
+nav.menu ul li {
+    display: inline-block;
+    margin-right: 16px;
+}
+
+nav.menu ul li a {
+    color: black;
+    font-family: "Big Shoulders Display";
+    text-decoration: none;
+    font-size: 25px;
+}
+
+nav.menu ul li:hover a {
+    text-decoration: underline;
+}
+
+
+article {
+    flex-grow: 1;
+    margin-top: 160px;
+    margin-bottom: 64px;
+    max-width: 900px;
+    grid-area: title;
+    display: grid;
+    grid-template: 
+        "120px auto"
+        "120px auto"
+        "120px auto"
+        "120px auto";
+    grid-template-areas: 
+        "title title"
+        "info text"
+        "info subscribe"
+        "popular-text popular-list";
+    grid-gap: 64px;
+}
+
+.title {
+    grid-area: title;
+}
+
+.title h3 {
+    text-transform: uppercase;
+    color: var(--text-color-grey);
+    margin-bottom: 32px;
+}
+
+.title h1 {
+    font-size: 70px;
+    margin-bottom: 16px;
+    text-indent: -0.42em;
+}
+
+.title h2 {
+    font-size: 22px;
+    color: var(--text-color-grey);
+}
+
+.info {
+    grid-area: info;
+}
+
+.info .meta {
+    margin-bottom: 64px;
+}
+
+.info .meta p {
+    color: var(--text-color-grey);
+}
+
+.info .social img {
+    width: 20px;
+    margin-left: 3px;
+    cursor: pointer;
+}
+
+.text {
+    grid-area: text;
+}
+
+.text .image img {
+    object-fit: cover;
+    height: 350px;
+    width: 100%;
+}
+
+
+.text .image em {
+    display: block;
+    color: grey;
+    margin: 8px;
+    margin-bottom: 32px;
+    font-family: "Playfair Display";
+}
+
+
+.text p {
+    font-family: "Be Vietnam";
+    line-height: 1.6;
+}
+
+.text p + p {
+    margin-top: 32px;
+}
+
+.text .toombstone {
+   margin-top: 0px;
+   margin-bottom: 32px;
+   font-size: 30px;
+}
+
+.subscribe {
+    grid-area: subscribe;
+    background: var(--theme-color);
+    color: white;
+    padding: 24px 32px;
+}
+
+.subscribe h2 {
+    margin-bottom: 16px;
+}
+
+.subscribe p {
+    font-family: "Be Vietnam";
+    line-height: 1.6;
+}
+
+.subscribe p + p {
+   margin-top: 16px;
+}
+
+.subscribe button {
+    margin-top: 32px;
+    padding: 8px 16px;
+    border: none;
+    outline: none;
+    background: none;
+    border: 2px solid white;
+    font-size: 20px;
+    color: white;
+    font-family: "Big Shoulders Display";
+    cursor: pointer;
+    transition: all 300ms cubic-bezier(.73,0,.28,.99);
+}
+
+.subscribe button:hover {
+    background: white;
+    color: black;
+}
+
+
+
+h2.popular-text {
+    grid-area: popular-text;
+    max-width: 120px;
+}
+
+.popular-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 16px;
+    grid-area: popular-list;
+}
+
+.popular-list div {
+    cursor: pointer;
+}
+
+.popular-list div img {
+    object-fit: cover;
+    height: 120px;
+    width: 100%;
+    transform: scale(1);
+    transition: all 300ms cubic-bezier(.73,0,.28,.99);
+}
+
+.popular-list div:hover img {
+    transform: scale(1.05);
+}
+
+.popular-list div:hover h3 {
+    text-decoration: underline;
+}
+
+
+
+.popular-list div div {
+    margin: 8px;
+}
+
+.popular-list div h3 {
+    margin-bottom: 4px;
+}
+
+.popular-list div em {
+    color: var(--text-color-grey);
+    font-size: 14px;
+}
+
+footer {
+    width: 100%;
+    padding: 128px 64px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: rgb(34, 34, 34);
+    color: white;
+    display: grid;
+    grid-template: "2fr 1fr 1fr";
+    grid-template-areas: 
+        "logo menu menu"
+        "copyright copyright copyright";
+}
+
+footer h1 {
+    grid-area: logo;
+    font-size: 40px;
+    font-family: "Big Shoulders Display";
+    max-width: 150px;
+    background: var(--theme-color);
+    color: white;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 700;
+    clip-path: polygon(
+        0 0, /* left top */
+        100% 0, /* right top */ 
+        100% 100%, /* right bottom */
+        0 90% /* left bottom */
+    );
+    margin-right: 128px;
+}
+
+footer nav {
+    grid-area: menu;
+    display: flex;
+    flex-direction: row;
+}
+
+footer nav ul {
+    list-style: none;
+}
+
+footer nav ul li:first-child {
+    margin-bottom: 16px;
+}
+
+footer nav ul li a {
+    color: var(--text-color-grey-dark);
+    display: block;
+    max-width: 150px;
+    margin-top: 8px;
+    text-decoration: none;
+}
+
+footer nav ul li:hover a {
+    text-decoration: underline;
+}
+
+footer .copyright {
+    color: var(--text-color-grey-dark);
+    grid-area: copyright;
+    margin-top: 128px;
+    justify-self: center;
+}
