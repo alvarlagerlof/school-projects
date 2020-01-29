@@ -1,0 +1,10 @@
+/home/alvar/git/textgame/obj/Debug/netcoreapp2.0/textgame.csproj.CoreCompileInputs.cache
+/home/alvar/git/textgame/obj/Debug/netcoreapp2.0/textgame.AssemblyInfoInputs.cache
+/home/alvar/git/textgame/obj/Debug/netcoreapp2.0/textgame.AssemblyInfo.cs
+/home/alvar/git/textgame/bin/Debug/netcoreapp2.0/textgame.deps.json
+/home/alvar/git/textgame/bin/Debug/netcoreapp2.0/textgame.runtimeconfig.json
+/home/alvar/git/textgame/bin/Debug/netcoreapp2.0/textgame.runtimeconfig.dev.json
+/home/alvar/git/textgame/bin/Debug/netcoreapp2.0/textgame.dll
+/home/alvar/git/textgame/bin/Debug/netcoreapp2.0/textgame.pdb
+/home/alvar/git/textgame/obj/Debug/netcoreapp2.0/textgame.dll
+/home/alvar/git/textgame/obj/Debug/netcoreapp2.0/textgame.pdb
