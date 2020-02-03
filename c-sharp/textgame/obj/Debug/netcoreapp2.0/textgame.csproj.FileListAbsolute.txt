@@ -8,3 +8,13 @@
 /home/alvar/git/textgame/bin/Debug/netcoreapp2.0/textgame.pdb
 /home/alvar/git/textgame/obj/Debug/netcoreapp2.0/textgame.dll
 /home/alvar/git/textgame/obj/Debug/netcoreapp2.0/textgame.pdb
+/Users/alvar/git/school-projects/c-sharp/textgame/bin/Debug/netcoreapp2.0/textgame.deps.json
+/Users/alvar/git/school-projects/c-sharp/textgame/bin/Debug/netcoreapp2.0/textgame.runtimeconfig.json
+/Users/alvar/git/school-projects/c-sharp/textgame/bin/Debug/netcoreapp2.0/textgame.runtimeconfig.dev.json
+/Users/alvar/git/school-projects/c-sharp/textgame/bin/Debug/netcoreapp2.0/textgame.dll
+/Users/alvar/git/school-projects/c-sharp/textgame/bin/Debug/netcoreapp2.0/textgame.pdb
+/Users/alvar/git/school-projects/c-sharp/textgame/obj/Debug/netcoreapp2.0/textgame.csprojAssemblyReference.cache
+/Users/alvar/git/school-projects/c-sharp/textgame/obj/Debug/netcoreapp2.0/textgame.AssemblyInfoInputs.cache
+/Users/alvar/git/school-projects/c-sharp/textgame/obj/Debug/netcoreapp2.0/textgame.AssemblyInfo.cs
+/Users/alvar/git/school-projects/c-sharp/textgame/obj/Debug/netcoreapp2.0/textgame.dll
+/Users/alvar/git/school-projects/c-sharp/textgame/obj/Debug/netcoreapp2.0/textgame.pdb
