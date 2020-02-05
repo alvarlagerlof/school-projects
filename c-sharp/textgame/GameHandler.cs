@@ -43,35 +43,27 @@ namespace textgame
             for (int i = 0; i < choice.Options.Count; i++) 
             {
                 var item = choice.Options.ElementAt(i);
-                var key = item.Key;
-                var value = item.Value;
 
                 if (currentChoosen == i) 
                 {
-                    System.Console.WriteLine("> " + key);
+                    System.Console.WriteLine("> " + item.Key);
                 } else {
-                    System.Console.WriteLine("  " + key);
+                    System.Console.WriteLine("  " + item.Key);
                 }
             }
 
-            // TODO: Remove duplication
+            // TODO: Set type to var
             var choosenItem = choice.Options.ElementAt(currentChoosen);
-            var choosenKey = choosenItem.Key;
             var choosenValue = choosenItem.Value;
 
             switch (Console.ReadKey(true).Key) 
             {
                 case ConsoleKey.Enter:
-                    if (choosenValue is Choice) 
-                    {
-                        PresentChoice(0, true, (Choice) choosenValue);
+                    Choice? choosenValueExcecuted = choosenValue();
 
-                    } else if (choosenValue is Action) {
-                        Console.Clear();
-                        Action action = (Action) choosenValue;
-                        action();
-                    } else {
-                        System.Console.WriteLine("No type match");
+                    if (choosenValueExcecuted != null) 
+                    {
+                        PresentChoice(0, true, choosenValueExcecuted);
                     }
                     break;
 
@@ -88,6 +80,10 @@ namespace textgame
                     {
                         PresentChoice(currentChoosen + 1, false, choice);
                     }
+                    PresentChoice(currentChoosen, false, choice);
+                    break;
+
+                default: 
                     PresentChoice(currentChoosen, false, choice);
                     break;
             }
