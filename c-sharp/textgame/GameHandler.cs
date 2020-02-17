@@ -7,9 +7,10 @@ namespace textgame
     public class GameHandler
     {
 
+        public static Random rand = new Random();
+
         public static void WriteSlowly(string text) 
         {
-            Random rand = new Random();
 
             foreach (char c in text)
             {
@@ -27,17 +28,25 @@ namespace textgame
             System.Console.WriteLine();
         }
 
+        public static void PrintQuestion(string[] question, bool isFirstDraw) {
+            if (isFirstDraw) {
+                for (int i = 0; i < question.Length; i++) 
+                {
+                    WriteSlowly(question[i]);
+                    Thread.Sleep(rand.Next(1500, 5000));
+                    if (i != question.Length-1) Console.Clear();
+                }
+            } 
+            else
+            {
+                Console.WriteLine(question[question.Length-1]);
+            }
+        }
+
         public static void PresentChoice(int currentChoosen, bool isFirstDraw, Choice choice) 
         {
             Console.Clear();
-            if (isFirstDraw) 
-            {
-                WriteSlowly(choice.Question);
-            } else {
-                Console.WriteLine(choice.Question);
-            }
-
-            Console.WriteLine();
+            PrintQuestion(choice.Question, isFirstDraw);
             
 
             for (int i = 0; i < choice.Options.Count; i++) 
