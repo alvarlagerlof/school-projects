@@ -6,94 +6,130 @@ namespace textgame
 {
     public class GameHandler
     {
+        private static Random rand = new Random();
 
-        public static Random rand = new Random();
-
-        public static void WriteSlowly(string text) 
+        public static void WriteSlowly(string text)
         {
+            bool sleep = true;
 
+            // To allow the user to press ENTER to skip 
+            // the typing effect on a long text
+            void sleepWithInterrupt(int sleepTime)
+            {
+                if (Console.KeyAvailable &&
+                   (Console.ReadKey(true).Key == ConsoleKey.Enter))
+                {
+                    sleep = false;
+                }
+                else if (sleep)
+                {
+                    Thread.Sleep(sleepTime);
+                }
+            }
+
+            Console.Clear();
             foreach (char c in text)
             {
                 Console.Write(c);
 
-                if (c.ToString() == "." || c.ToString() == "," || c.ToString() == "?") 
+                // Longer pauses between sentances
+                if (c.ToString() == "." || c.ToString() == "," ||
+                    c.ToString() == "?" || c.ToString() == "?")
                 {
-                    Thread.Sleep(rand.Next(700, 1500));
-                } else {
-                    Thread.Sleep(rand.Next(20, 100));
+                    sleepWithInterrupt(rand.Next(200, 400));
+                }
+                else
+                {
+                    sleepWithInterrupt(rand.Next(50, 100));
+                    //sleepWithInterrupt(rand.Next(0, 5));
                 }
             }
 
-            Thread.Sleep(rand.Next(150, 300));
-            System.Console.WriteLine();
+            Console.WriteLine();
+            Thread.Sleep(1000);
+
         }
 
-        public static void PrintQuestion(string[] question, bool isFirstDraw) {
-            if (isFirstDraw) {
-                for (int i = 0; i < question.Length; i++) 
+
+
+        public static void PrintQuestion(string[] question, bool isFirstPrint)
+        {
+            // Print slowly the first time, following times instant, and 
+            // only the last part (for when the users steps beteen alternatives)
+            if (isFirstPrint)
+            {
+                for (int i = 0; i < question.Length; i++)
                 {
                     WriteSlowly(question[i]);
-                    Thread.Sleep(rand.Next(1500, 5000));
-                    if (i != question.Length-1) Console.Clear();
+                    Thread.Sleep(1000);
                 }
-            } 
+            }
             else
             {
-                Console.WriteLine(question[question.Length-1]);
+                Console.WriteLine(question[question.Length - 1]);
             }
         }
 
-        public static void PresentChoice(int currentChoosen, bool isFirstDraw, Choice choice) 
+        public static void PresentChoice(Choice choice, int currentChoosen, bool isFirstPrint)
         {
             Console.Clear();
-            PrintQuestion(choice.Question, isFirstDraw);
-            
+            PrintQuestion(choice.Question, isFirstPrint);
+            Console.WriteLine();
 
-            for (int i = 0; i < choice.Options.Count; i++) 
+
+            // First just print the list, when the current one prefixed with "> "
+            for (int i = 0; i < choice.Options.Count; i++)
             {
                 var item = choice.Options.ElementAt(i);
 
-                if (currentChoosen == i) 
+                if (currentChoosen == i)
                 {
                     System.Console.WriteLine("> " + item.Key);
-                } else {
+                }
+                else
+                {
                     System.Console.WriteLine("  " + item.Key);
                 }
             }
 
-            // TODO: Set type to var
-            var choosenItem = choice.Options.ElementAt(currentChoosen);
-            var choosenValue = choosenItem.Value;
+            // Get the func that is the value of the Dictionary in Choice.cs
+            Func<Choice?> choosenValue = choice.Options.ElementAt(currentChoosen).Value;
 
-            switch (Console.ReadKey(true).Key) 
+            // This part listens for user input and responds accordingly
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Enter:
+                    // Here, the Func is executed to either get 
+                    // a Choice or null
                     Choice? choosenValueExcecuted = choosenValue();
 
-                    if (choosenValueExcecuted != null) 
+                    // If the Choice turns out to be null, then the story
+                    // has ended and no other choice should be presented
+                    // See more in Choice.cs
+                    if (choosenValueExcecuted != null)
                     {
-                        PresentChoice(0, true, choosenValueExcecuted);
+                        PresentChoice(choosenValueExcecuted, 0, true);
                     }
                     break;
 
                 case ConsoleKey.UpArrow:
-                    if (currentChoosen > 0) 
+                    if (currentChoosen > 0)
                     {
-                        PresentChoice(currentChoosen - 1, false, choice);
+                        PresentChoice(choice, currentChoosen - 1, false);
                     }
-                    PresentChoice(currentChoosen, false, choice);
+                    PresentChoice(choice, currentChoosen, false);
                     break;
 
                 case ConsoleKey.DownArrow:
-                    if (currentChoosen < choice.Options.Count - 1) 
+                    if (currentChoosen < choice.Options.Count - 1)
                     {
-                        PresentChoice(currentChoosen + 1, false, choice);
+                        PresentChoice(choice, currentChoosen + 1, false);
                     }
-                    PresentChoice(currentChoosen, false, choice);
+                    PresentChoice(choice, currentChoosen, false);
                     break;
 
-                default: 
-                    PresentChoice(currentChoosen, false, choice);
+                default:
+                    PresentChoice(choice, currentChoosen, false);
                     break;
             }
         }
