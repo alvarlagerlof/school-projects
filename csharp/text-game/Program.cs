@@ -136,9 +136,9 @@ namespace textgame
                     ["Nästa"] = () => new Choice
                     {
                         Question = new string[] {
-                            "Ett svagt vitt ljus uppenbarade sig. När molnen tillfälligt separerar sig  strålar en strimma av månsken ned. Du beundrar den enorma skönheten och låter blicken följa silverstrålen nedåt. Där var inte de våldsamma dalar och toppar som de kraftiga vindarna givit upphov till, isället uppenbarar sig en svart siluett. Efter några sekunders blinkande börjar du urskilja ytterligare former längs kanten av silutten. Du anar stammar höga som kolonner med avlånga blad på toppen. Det måste vara palmer!",
+                            "Ett svagt vitt ljus uppenbarade sig. När molnen tillfälligt separerar sig strålar en strimma av månsken ned. Du beundrar den enorma skönheten och låter blicken följa silverstrålen nedåt. Där var inte de våldsamma dalar och toppar som de kraftiga vindarna givit upphov till, isället uppenbarar sig en svart siluett. Efter några sekunders blinkande börjar du urskilja ytterligare former längs kanten av silutten. Du anar stammar höga som kolonner med avlånga blad på toppen. Det måste vara palmer!",
                             "Du börjar simma mot det som du anar är en ö med förnyat hopp. Du stöter på något i vattnet. Trevandes hittar du en stel hand. En överlevande från skeppet tänker du, men det visar sig vara allt för sent. Du undrar hur många från Royal William som ännu är vid livet.",
-                            "Plötsligt uppfattar du ett gnisslande brak alldeles bakom dig. Det är skrovet på båten som med oroande fart, snabbt som den snabbaste droska,  färdas mot dig. Plötsligt känner du en slag i huvudet och allt blir svart.. Plötsligt känner du en smäll i huvudet och allt blir svart. "
+                            "Plötsligt uppfattar du ett gnisslande brak alldeles bakom dig. Det är skrovet på båten som med oroande fart, snabbt som den snabbaste droska, färdas mot dig. Plötsligt känner du en slag i huvudet och allt blir svart. Plötsligt känner du en smäll i huvudet och allt blir svart. "
                         },
                         Options = new Dictionary<string, Func<Choice?>>()
                         {
@@ -355,7 +355,7 @@ namespace textgame
             return new Choice
             {
                 Question = new string[] {
-                    "Du går vandrar runt bland stenarna, letandes efter en lämplig sten. I en skreva bakom ett block finner du den perfekta stenen.\nVad gör du nu?",
+                    "Du vandrar runt bland stenarna, letandes efter en lämplig sten. I en skreva bakom ett block finner du den perfekta stenen.\nVad gör du nu?",
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
