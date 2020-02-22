@@ -24,7 +24,5 @@ namespace textgame
 
         public string[] Question { get; set; } = default!;
         public Dictionary<string, Func<Choice?>> Options { get; set; } = default!;
-
     }
-
 }
