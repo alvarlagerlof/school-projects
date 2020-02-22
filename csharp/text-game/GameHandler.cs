@@ -47,10 +47,7 @@ namespace textgame
 
             Console.WriteLine();
             Thread.Sleep(1000);
-
         }
-
-
 
         public static void PrintQuestion(string[] question, bool isFirstPrint)
         {

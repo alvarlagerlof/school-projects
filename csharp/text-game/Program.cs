@@ -6,26 +6,19 @@ namespace textgame
 {
     class Program
     {
-
         private static bool playerHealthFull = false;
+        private static bool playerBrokenCoconuts = false;
+
         private static bool playerHasSharpStone = false;
         private static bool playerHasBigStone = false;
         private static bool playerHasCoconuts = false;
 
-        private static bool playerHasBrokenCoconuts = false;
-
-
         private static bool playerVisitedCliffs = false;
-
         private static bool playerVisitedPalmTrees = false;
-
         private static bool playerVisitedMountain = false;
-
-
 
         static void Main(string[] args)
         {
-
             // This is where the first part of the story is defined.
             // Depending on the user choice, it is built up to more parts
             // as the user plays.
@@ -33,8 +26,8 @@ namespace textgame
             Choice mainStory = new Choice
             {
                 Question = new string[] {
-                    "Välkommen till ett textspel skapat av Alvar Lagerlöf, med insperation från Robinson Crusoe. ",
-                    "Spelet kommer att presentera dig med ett antal alternativ på flera ställen. Dina val driver storyn framåt.",
+                    "Välkommen till ett textspel skapat av Alvar Lagerlöf, med insperation från Robinson Crusoe.",
+                    "Spelet kommer att presentera dig för ett antal alternativ på i olika delar av berättelsen. Dina val driver handlingen framåt.",
                     "Du navigerar med piltangenterna på tangentbordet samt enter-knappen. För att testa att du förstår, vad är 1+2?"
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
@@ -49,33 +42,6 @@ namespace textgame
             Console.CursorVisible = true;
             GameHandler.PresentChoice(mainStory, 0, true);
         }
-
-
-
-
-
-
-        static Choice Example()
-        {
-            return new Choice
-            {
-                Question = new string[] {
-                    "Example",
-                    "Example"
-                },
-                Options = new Dictionary<string, Func<Choice?>>()
-                {
-                    ["Example"] = () => Example(),
-                    ["Example"] = () => Example(),
-                }
-            };
-        }
-
-
-
-
-
-
 
 
         static Choice IntoductionAnswerThree()
@@ -94,7 +60,7 @@ namespace textgame
         {
             return new Choice
             {
-                Question = new string[] { "Det var inte riktigt rätt svar. Prova att klicka på pil ned (vänstra sidan av tangentbordet) och sedan på enter (knappen för ny rad)." },
+                Question = new string[] { "Det var inte riktigt rätt svar. Prova att klicka på pil ned (vänstra sidan av tangentbordet) och sedan på enter (knappen för ny rad) för att prova igen." },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
                     ["Prova igen"] = () => IntoductionAnswerTryAgain(),
@@ -120,10 +86,10 @@ namespace textgame
             return new Choice
             {
                 Question = new string[] {
-                    "Stormen dånade med en hiskeligt oljud. Detta är icke en vanlig strom. Ty vanliga stormar kan ej sänka skepp som Royal William. Dessa mått av vågor hade ingen man eller kvinna sett i Europa på årtionden.",
-                    "En våg slår dig i bakhuvudet och du är återigen under ytan. Denna gång var du så oberädd att du inte han ta djupt andetag innan. Du simmar åter mot ytan och kommer upp efter vad som kändes som en halv minut under ytan.",
-                    "Cirka 30 meter bakom dig tornar en en mur av vatten hög som Sank Paulskatedralesn valv upp sig; inte ens horisonten är synlig. Om du ens hade sett horisonten utan vågen, ty mörkret från åskmolnen och vattendropparna förda med vinden skapade ett mörkt dis som omfamnande hela verkligheten runt omkring dig.",
-                    "Att reflektera över mörket i tider som dessa är dock inte smart, och du bestämmer dig isället för att försöka överleva på bästa sätt du kan. På väg är en ny våg och något måste göras för att bryta denna eviga cykel av nästintil drunknande. \nVad gör du?"
+                    "Stormen dånar med ett hiskeligt oljud som nästan spränger ditt huvud. Detta är icke en vanlig storm. Ty vanliga stormar kan ej sänka skepp som Royal William. Dessa mått av vågor hade ingen man eller kvinna sett i Europa på årtionden, kanske århundranden.",
+                    "En våg slår dig i bakhuvudet och du är plötsligt under ytan. Totalt mörker råder i infernot i nedan himlen. Du var inte beredd och hann inte ta det djupa andetag du så väl hade behövt. Du simmar mot ytan och kommer upp efter vad som kändes som en en evighet i havsmonstrens djup.",
+                    "Du får ingen vila, för cirka 30 meter bakom dig tornar en en mur av vatten upp sig, hög som Sankt Paulskatedralens valv. Inte ens horisonten är synlig. Om du ens hade kunnat se horisonten utan vågen, ty mörkret från åskmolnen och vattendropparna förda med vinden skapar ett mörkt dis som omfamnar hela verkligheten runtomkring dig.",
+                    "Att begrava sig i mörket under stunder som dessa är dock ingen väg framåt och du bestämmer dig isället för att försöka överleva efter bästa förmåga. En ny våg nalkas och du måste göra något för att bryta denna eviga cykel av nästintil drunknande. \nVad gör du?"
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
@@ -133,15 +99,14 @@ namespace textgame
             };
         }
 
-
         static Choice BeginningSwimForward()
         {
             return new Choice
             {
                 Question = new string[] {
-                    "Med krafttag börjar du simma framåt, i samma riktning som vidundret bakom dig. Trots att du kämpar för livet tar vågen in på dig. Även denna kommer att så dig i bakhuvudet och du är åter under. ",
-                    "Virvarna är ännu värre den här gången. Ett evigt tummlande håller dig fast i det blöta mörkret. ",
-                    "Nu är du åter vid ytan. En till våg är på väg. Det funkade inte. \nVad gör du nu?"
+                    "Med krafttag börjar du simma framåt, i samma riktning som vidundret bakom dig. Trots att du kämpar för livet tar vågen in på dig.",
+                    "Även denna slår dig i bakhuvudet och du är tillbaka i havets inferno.",
+                    "Virvarna är ännu värre den här gången. Ett evigt tummlande håller dig fast i det blöta mörkret. Till slut är du åter vid ytan. En till monstruös våg är på väg. \nVad gör du?"
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
@@ -153,7 +118,7 @@ namespace textgame
 
         static Choice? BeginningSwimForwardAgain()
         {
-            GameHandler.WriteSlowly("Du får ännu en våg i huvudet och dör");
+            GameHandler.WriteSlowly("Du får ännu en våg i huvudet och du inser att livet har nått sin ände.");
             return GameOver();
         }
 
@@ -162,31 +127,31 @@ namespace textgame
             return new Choice
             {
                 Question = new string[] {
-                    "Vågen närmar sig och vattenytan började nu resa framför dig till vad som kom att bli en hiskeligt brant backe. ",
-                    "Med ett kraftift simtag är du under. Var det mörkt förut så är är det mörkare nu. Med stor ansträngning kämpar du dig emot den väldiga strömmen. Uppåt och framåt. Så, plötsligt är du vid ytan. ",
-                    "Nästa väg är på väg, men du är nu i högre altitud än tidigare och du ser något alldeless speciellt."
+                    "Vågen närmar sig och vattenytan började nu resa sig framför dig till vad som kommer att bli en rysligt, nej fasanfullt, brant backe.",
+                    "Du tar ett djupt andetag, ty du vet att du icke kommer att ha en sådan möjlighet under de tiotal mödosamma sekunder som du vet att du behöver vara i havets grepp. Med ett kraftigt simtag är du under. Var det mörkt förut så är det än mörkare nu. Med stor ansträngning kämpar du dig mot den mäktiga strömmen. Du strävar uppåt och framåt, osäker på om du någonsin kommer upp igen. Så, plötsligt är du vid ytan.",
+                    "Nästa våg närmar sig, men vattenmassorna lyfter dig högre upp och du ser något alldeles speciellt."
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
                     ["Nästa"] = () => new Choice
                     {
                         Question = new string[] {
-                            "Ett svagt vitt ljud uppenbarade sig. Molnens tillfälliga separation lät en strimma av månsken stråla ned. Du beundrar dig över den enorma sköneheten och låter blicken följa strålen ned. Inte var där de våldsamma dalar och toppar som de kraftiga vidrarna gett upphov till, isället uppenbarar sig en svart silhouette. Efter några sekunders blinkande börjar du urskillja ytterligare former längs kanten av silhoetten. Stammar långa som girraffer med avlånga blad på toppen. Det måste vara, palmer!",
-                            "Du börjar simma mot ön med förnyat hopp. Du stöter på något i vattnet. Trevandes hittar du en hand. En överlevande från skeppet tänker du, men det visar sig vara allt för sent. Du undrar hur många från Royal William som ännu är vid livet.",
-                            "Plötsligt uppfattar du ett gnisslande brak alldeles bakom dig. Det är skrovet på båten som är med oroande fart färdas mot dig. Plötsligt känner du en smäll i huvudet och allt blir svart. "
+                            "Ett svagt vitt ljus uppenbarade sig. När molnen tillfälligt separerar sig  strålar en strimma av månsken ned. Du beundrar den enorma skönheten och låter blicken följa silverstrålen nedåt. Där var inte de våldsamma dalar och toppar som de kraftiga vindarna givit upphov till, isället uppenbarar sig en svart siluett. Efter några sekunders blinkande börjar du urskilja ytterligare former längs kanten av silutten. Du anar stammar höga som kolonner med avlånga blad på toppen. Det måste vara palmer!",
+                            "Du börjar simma mot det som du anar är en ö med förnyat hopp. Du stöter på något i vattnet. Trevandes hittar du en stel hand. En överlevande från skeppet tänker du, men det visar sig vara allt för sent. Du undrar hur många från Royal William som ännu är vid livet.",
+                            "Plötsligt uppfattar du ett gnisslande brak alldeles bakom dig. Det är skrovet på båten som med oroande fart, snabbt som den snabbaste droska,  färdas mot dig. Plötsligt känner du en slag i huvudet och allt blir svart.. Plötsligt känner du en smäll i huvudet och allt blir svart. "
                         },
                         Options = new Dictionary<string, Func<Choice?>>()
                         {
                             ["Nästa"] = () => new Choice
                             {
                                 Question = new string[] {
-                                    "Värmen är outhärlig. Du finner att du ligger i sand. Du slår upp ögonbrynen och din blick möts av en vit strand. En krabba går förbi fullkomligt ostört på väg mot några klippor en bit bort. Du reser dig upp och tittat runt. Ett väldigt berg täckt av grönska. \nVad gör du?",
+                                    "Värmen är outhärlig. Du finner att du ligger i sand. Du slår upp ögonbrynen och din blick möts av en vit strand. Den är helt tom på levande varelser förutom en krabba som går förbi fullkomligt ostört. Med en hunger som du aldrig tidigare har upplevt, kanske en sådan som trashankarna i slummen lider av, reser du dig tungt upp och tittar runt. Till höger ser du ett väldigt berg täckt av grönska och till vänster, bredvid några klippor en tät skog av palmer.\nVart ska du bege dig?",
                                 },
                                 Options = new Dictionary<string, Func<Choice?>>()
                                 {
-                                    ["Går till palmerna"] = () => PalmTrees(),
-                                    ["Går till klipporna vid stranden"] = () => Cliffs(),
-                                    ["Går till berget"] = () => Mountain(),
+                                    ["Till palmerna"] = () => PalmTrees(),
+                                    ["Till klipporna vid stranden"] = () => Cliffs(),
+                                    ["Till berget"] = () => Mountain(),
                                 }
                             }
                         }
@@ -195,11 +160,10 @@ namespace textgame
             };
         }
 
-
         static Choice Mountain()
         {
             var firstTime = new string[] {
-                "Du går fram till berget. Det är högt som inget annat. Totalt täckt av grönska. \nVad gör du?",
+                "Du går fram till berget. Det är det högsta berg du någonsin har sett. Du anar en svag rök på toppen och misstänker att berget i själva verket är en vulkan. Det är emellertid svårt att avgöra ty hela ytan är täckt av ymmnig grönska.\nVad gör du?",
             };
 
             var followingTime = new string[] {
@@ -226,7 +190,7 @@ namespace textgame
             return new Choice
             {
                 Question = new string[] {
-                    "Du är för trött och törstig för att gå upp här. Leta efter något att äta. \nVad gör du?",
+                    "Du börjar marschen upp för berget men allt eftersom du kommer högre upp känner du dig svagare, nej snarare närmare döden. Du inser att du är för trött och bestämmer dig för att gå tillbaka och leta efter någon form av proviant.\nVad gör du?",
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
@@ -238,20 +202,19 @@ namespace textgame
 
         static Choice? MountainClimbSuccess()
         {
-            GameHandler.WriteSlowly("Du börjar gå upp den långa vägen upp för berget. Det är tungt men efter en timme är du uppe. Där uppe ser du en båt. Du är räddad!");
+            GameHandler.WriteSlowly("Du börjar gå den långa vägen upp för berget. Det är brant och luften är fuktig, men du känner dig stark efter den näringsrika kokosmjölken. Du måste ständigt vara på din vakt, ty block hörs rasa genom skogen runtomkring dig. Efter timmar, nej evigheter, är du äntligen uppe på toppen och mycket riktigt är berget en vulkan, ty rök stiger från kratern.");
+            GameHandler.WriteSlowly("Du ser nu öns väldighet och stranden du vakande på långt nere. Det rasande havet som fört dig från Royal William till denna gudsförgätna ö är nu stilla och blankt som en spegel. För att se även norra sidan av ön går du över till andra sidan kratern. Från en glänta i skogen långt där nere ser du röken från en eld och hör svaga hammarslag. Det finns människor på ön! Du är räddad!");
             return Win();
         }
-
-
 
         static Choice PalmTrees()
         {
             var questionFirstTime = new string[] {
-                "Du beger dig i riktning mot palmerna. Skuggan är skönt svalkande. Du sätter dig ned vid en stam för att vila. Då ser du en bit bort en kokosnöt. Du tittar upp och ser flera stycken övanför dig. \nVad gör du?",
+                " Du beger dig i riktning mot palmerna. När du når fram svalkar skuggan skönt din brända rygg. Du sätter dig ned vid en stam för att vila. En bit bort på marken upptäcker du en kokosnöt. Du tittar upp och ser flera ovanför dig.\nVad gör du?",
             };
 
             var questionFollowingTime = new string[] {
-                "Tillbaka till palmerna. \nVad gör du?",
+                "Tillbaka vid palmerna. \nVad gör du?",
             };
 
             var options = new Dictionary<string, Func<Choice?>>()
@@ -260,12 +223,12 @@ namespace textgame
                 ["Går till berget"] = () => Mountain(),
             };
 
-            if (!playerHasCoconuts && !playerHasBrokenCoconuts)
+            if (!playerHasCoconuts && !playerBrokenCoconuts)
             {
                 options.Add("Försök ta ned kokosnötter", () => PalmTreesTakeDownFirst());
             }
 
-            if (!playerHasCoconuts && playerHasBrokenCoconuts)
+            if (!playerHasCoconuts && playerBrokenCoconuts)
             {
                 options.Add("Ta ned fler kokosnötter", () => PalmTreesTakeDownFollowing());
             }
@@ -283,33 +246,24 @@ namespace textgame
 
         static Choice PalmTreesTakeDownFirst()
         {
-            var noSharpStone = new string[] {
-                "Palmerna är alla höga. Du börjar klätta upp på dem, och det går förvånadsvärt bra. Väl uppe går det dock sämre. Hur du än gör kan du inte få ned dem. Du behöver något vasst. Vad för du?",
-            };
-
-            var sharpStone = new string[] {
-                "Palmerna är alla höga. Du börjar klätta upp på dem, och det går förvånadsvärt bra. Här kan du anväda din vassa sten. Vad för du?",
-            };
-
-            var optionsBase = new Dictionary<string, Func<Choice?>>()
+            var options = new Dictionary<string, Func<Choice?>>()
             {
                 ["Går till klipporna vid stranden"] = () => Cliffs(),
                 ["Går till berget"] = () => Mountain(),
             };
 
-            var optionsSharpStone = new Dictionary<string, Func<Choice?>>()
+
+            if (playerHasSharpStone)
             {
-                ["Skär ned kokosnötter med din vassa sten"] = () => PalmTreesTakeDownFirstSucess(),
-                ["Går till klipporna vid stranden"] = () => Cliffs(),
-                ["Går till berget"] = () => Mountain(),
-            };
+                options.Add("Skär ned kokosnötter med din vassa sten", () => PalmTreesTakeDownFirstSucess());
+            }
 
             return new Choice
             {
                 Question = new string[] {
-                    "Palmerna är alla höga. Du börjar klätta upp på dem, och det går förvånadsvärt bra. Väl uppe går det dock sämre. Hur du än gör kan du inte få ned dem hur du än gör. Du behöver något vasst. Vad för du?",
+                    "Du börjar klätta upp längs stammen på en palm och det går förvånansvärt bra. Väl uppe går det dock sämre. Hur du än gör kan du inte få ned någon kokosnöt. Du behöver något vasst.\nVad gör du?",
                 },
-                Options = playerHasSharpStone ? optionsSharpStone : optionsBase
+                Options = options
             };
         }
 
@@ -320,7 +274,7 @@ namespace textgame
             return new Choice
             {
                 Question = new string[] {
-                    "Med din vassa sten är det lätt att skära ned flera kokosnötter från trädet. Du klättar ned för att äntligen få dricka något. Men då slår det dig att du inte kan öppna kokosnötterna. Du behöver något tungt att mosa dem med. \nVad gör du?",
+                    "Med din vassa sten är det lätt att skära ned kokosnötter från trädet. Du lyckas få ned två stycken. Men då slår det dig att du inte kan komma åt innehållet. Du behöver något tungt att öppna dem med.\nVad gör du?",
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
@@ -337,7 +291,7 @@ namespace textgame
             return new Choice
             {
                 Question = new string[] {
-                    "Det går lättare nu. Du är van. Du har nu fler kokosnötter. Du bär bort den till stranden där din stora sten är. \nVad gör du?",
+                    "Det går lättare nu. Du är van. Du har nu två kokosnötter till. \nVad gör du?",
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
@@ -346,16 +300,14 @@ namespace textgame
             };
         }
 
-
-
         static Choice Cliffs()
         {
             var questionFirstTime = new string[] {
-                "Klipporna var stora. Vattnet skvalpade stilla runt dem. Runtomrking ligger lite stenar. \nVad gör du?",
+                "Du går till klipporna. De är stora som elefanter och varma som plåttak en solig dag. Men värmen förvånar dig inte ty den sol man kan få på dessa breddgrader är ofattbart mycket starkare än på Londons gator. Det nu nästan stilla havets vågor skvalpar mjukt runt klipporna.\nVad gör du nu?",
             };
 
             var questionFollowingTime = new string[] {
-                "Tillbaka till klipporna. \nVad gör du?",
+                "Tillbaka vid klipporna.\nVad gör du?",
             };
 
             var options = new Dictionary<string, Func<Choice?>>()
@@ -365,7 +317,7 @@ namespace textgame
             };
 
             if (!playerHasSharpStone)
-                options.Add("Utforska klippor mer", () => CliffFindSharpStone());
+                options.Add("Utforskar klipporna mer", () => CliffFindSharpStone());
 
             if (playerHasCoconuts && playerHasSharpStone && !playerHasBigStone)
                 options.Add("Leta efter stora stenar för att öppna kokosnöterna", () => CliffFindBigStone());
@@ -386,7 +338,7 @@ namespace textgame
             return new Choice
             {
                 Question = new string[] {
-                    "Du vandrar runt lite och ser plötsigt en sak. På toppen av en a stenarna låg en helt vit sten. Du plockar upp den och granskar den. Du kände plötsligt sting i handen och märker att du blöder. Stenen var vass. Den måste ha legat där i århundraden, ostörd av havets stormar. Du plockar upp den. \nVad gör du?",
+                    "På toppen av klipporna ligger en helt vit sten, vit som den renaste marmor. Du plockar upp den och beundrar dess skönhet. Du känner plötsligt ett sting  i handen och märker att du blöder. Stenen är visst vass som en knivsegg. Den måste ha legat där i århundraden, ostörd av havets  stormar.\nVart beger du dig med din nya upptäckt?\nVad gör du?",
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
@@ -403,11 +355,11 @@ namespace textgame
             return new Choice
             {
                 Question = new string[] {
-                    "Du går runt lite bland stenarna. Du hittar till slut en som är lagom stor. \nVad gör du?",
+                    "Du går vandrar runt bland stenarna, letandes efter en lämplig sten. I en skreva bakom ett block finner du den perfekta stenen.\nVad gör du nu?",
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
-                    ["Bär kokosnötter till stenen"] = () => CliffsTransportCoconutsAndBreak(),
+                    ["Bär stenen till kokosnötterna"] = () => CliffsTransportCoconutsAndBreak(),
                 }
             };
         }
@@ -419,7 +371,8 @@ namespace textgame
             return new Choice
             {
                 Question = new string[] {
-                    "Du håller din vassa sten mot kokosnöten och släpper den tunga stenen övanpå. Ett litet hål öppnas och du kan nu änligen dricka. Du blir genast piggare av den goda kokosmjölken. \nVad gör du med dina nya krafter?",
+                    "Du håller din vassa sten mot kokosnöten och släpper den tunga ovanpå. Ett litet hål öppnas och du anar ett fantastiskt innehåll. Du dricker girigt från nöten.",
+                    "Du blir genast piggare av den utsökta kokosmjölken.\nVad gör du med dina nya krafter?"
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
@@ -431,16 +384,14 @@ namespace textgame
 
         static Choice CliffsTransportCoconutsAndBreak()
         {
-            playerHealthFull = true;
-
             return new Choice
             {
                 Question = new string[] {
-                    "Stenen är för tung för att bära en längre sträcka så du går tillbaka och hämtar dina två kokosnötter. Sedan släpper du den på kokosnöten. Hela kokosnöten spricker och all kokosmjölk rinner ut. \nVad gör du?",
+                    "Du försöker bära stenen, men inser att den har allt för stor tyngd för att du ska kunna bära den en längre sträcka, så du går istället tillbaka och hämtar dina två kokosnötter. Sedan släpper du stenen på kokosnöten. Kokosnöten spricker isär och all kokosmjölk rinner ut.\nHur går du tillväga nu?",
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
-                    ["Försöker igen"] = () => CliffsBreakCoconutAgain(),
+                    ["Försöker igen på samma sätt"] = () => CliffsBreakCoconutAgain(),
                     ["Använder din vassa sten"] = () => CliffsUseSharpStone(),
                 }
             };
@@ -449,24 +400,19 @@ namespace textgame
         static Choice CliffsBreakCoconutAgain()
         {
             playerHasCoconuts = false;
-            playerHasBrokenCoconuts = true;
+            playerBrokenCoconuts = true;
 
             return new Choice
             {
                 Question = new string[] {
-                    "Även denna kokosnöt spricker och all kokosmjölk rinner ut. Du har nu slut på kokosnötter. \nVad gör du?",
+                    "Även denna kokosnöt brister och all kokosmjölk går förlorad. Du har nu slut på kokosnötter.\nVad gör du nu?",
                 },
                 Options = new Dictionary<string, Func<Choice?>>()
                 {
-                    ["Går till palmerna och hämtar fler"] = () => PalmTrees(),
+                    ["Går tillbaka till palmerna"] = () => PalmTrees(),
                 }
             };
         }
-
-
-
-
-
 
         public static Choice? GameOver()
         {
