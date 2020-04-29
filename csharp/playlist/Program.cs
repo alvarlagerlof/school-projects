@@ -13,11 +13,13 @@ namespace playlist
             Console.Clear();
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.TreatControlCAsInput = true;
+
 
             playlistService = new PlaylistService();
             manager = new ScreenManager(
                 playlistService,
-                new List<Type> { typeof(Playlist), typeof(Edit), typeof(Create) }
+                new List<Type> { typeof(Playlist), typeof(CreateEdit) }
             );
 
             manager.SwitchScreen(typeof(Playlist), new object { });
@@ -27,7 +29,7 @@ namespace playlist
 
         static void Loop()
         {
-            manager.OnInput(Console.ReadKey().Key);
+            manager.OnInput(Console.ReadKey());
             Loop();
         }
     }

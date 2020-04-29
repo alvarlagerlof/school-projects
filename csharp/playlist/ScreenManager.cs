@@ -21,10 +21,10 @@ namespace playlist
             Console.Clear();
             _activeScreen = _screens[type];
             _activeScreen.OnActivate(data);
-            _activeScreen.OnInput(ConsoleKey.NoName);
+            _activeScreen.OnInput(new ConsoleKeyInfo());
         }
 
-        public void OnInput(ConsoleKey key)
+        public void OnInput(ConsoleKeyInfo key)
         {
             Console.Clear();
             ScreenResult result = _activeScreen.OnInput(key);
@@ -41,17 +41,14 @@ namespace playlist
                     SwitchScreen(typeof(Playlist), new object { });
                     break;
                 case ScreenResult.ResultType.CreateOpen:
-                    SwitchScreen(typeof(Create), new object { });
+                    SwitchScreen(typeof(CreateEdit), new object { });
                     break;
                 case ScreenResult.ResultType.EditOpen:
-                    SwitchScreen(typeof(Edit), new object { });
+                    SwitchScreen(typeof(CreateEdit), result.Data);
                     break;
                 case ScreenResult.ResultType.Neutral:
                     break;
             }
-
         }
-
-
     }
 }

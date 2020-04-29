@@ -8,7 +8,7 @@ namespace playlist
     {
         void OnActivate(object data);
 
-        ScreenResult OnInput(ConsoleKey key);
+        ScreenResult OnInput(ConsoleKeyInfo key);
 
     }
 }

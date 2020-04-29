@@ -11,8 +11,10 @@ namespace playlist
         private int _topOffset = 0;
         private int _cursorIndex = 0;
         private readonly List<string> selected = new List<string> { };
-        private readonly Dictionary<string, List<string>> items = new Dictionary<string, List<string>> { };
+        private readonly Dictionary<string, List<object>> items = new Dictionary<string, List<object>> { };
         private PlaylistService _playlistService;
+        private bool _sortASC = true;
+        private int _sortIndex;
 
 
         private List<string> _headers;
@@ -21,16 +23,22 @@ namespace playlist
         {
             _playlistService = playlistService;
             _headers = headers;
+            _sortIndex = 0;
         }
 
-        public void AddItem(String id, List<string> cols)
+        public void AddItem(String id, List<object> cols)
         {
             items.Add(id, cols);
         }
 
+        public void ClearSelections()
+        {
+            selected.Clear();
+        }
+
         public void RemoveAll(Predicate<string> predicate)
         {
-            foreach (KeyValuePair<string, List<string>> item in items)
+            foreach (KeyValuePair<string, List<object>> item in items)
             {
                 if (predicate(item.Key))
                 {
@@ -39,21 +47,40 @@ namespace playlist
             }
         }
 
+        public IOrderedEnumerable<KeyValuePair<string, List<object>>> SortedItems()
+        {
+            // Sorting
+            var sortedItemsAsc = from pair in items
+                                 orderby pair.Value[_sortIndex] ascending
+                                 select pair;
+
+            var sortedItemsDesc = from pair in items
+                                  orderby pair.Value[_sortIndex] descending
+                                  select pair;
+
+            return _sortASC ? sortedItemsAsc : sortedItemsDesc;
+        }
+
         private void Render()
         {
             // Headers and status
             Console.Write("  ");
+
+            foreach (string header in _headers)
+            {
+                string newHeader = header;
+                if (_headers.IndexOf(header) == _sortIndex)
+                {
+                    newHeader += _sortASC ? " ⯅" : " ⯆";
+                }
+                Console.Write(AlignLeft(newHeader, Console.WindowWidth / _headers.Count));
+            }
+
             if (selected.Count > 0)
             {
-                Console.Write(selected.Count + " selected");
+                Console.Write("  " + selected.Count + " selected");
             }
-            else
-            {
-                foreach (string header in _headers)
-                {
-                    Console.Write(AlignLeft(header, Console.WindowWidth / _headers.Count));
-                }
-            }
+
             Console.WriteLine();
 
             // Line
@@ -62,6 +89,7 @@ namespace playlist
                 Console.Write(_HorizontalLine);
             }
             Console.WriteLine();
+
 
             if (items.Count > 0)
             {
@@ -79,7 +107,7 @@ namespace playlist
                             Console.BackgroundColor = ConsoleColor.Blue;
                         }
 
-                        if (selected.Contains(items.ElementAt(r).Key))
+                        if (selected.Contains(SortedItems().ElementAt(r).Key))
                         {
                             Console.Write("✓ ");
                         }
@@ -88,9 +116,9 @@ namespace playlist
                             Console.Write("□ ");
                         }
 
-                        for (int c = 0; c < items.ElementAt(r).Value.Count; c++)
+                        for (int c = 0; c < SortedItems().ElementAt(r).Value.Count; c++)
                         {
-                            Console.Write(AlignLeft(items.ElementAt(r).Value[c], Console.WindowWidth / _headers.Count));
+                            Console.Write(AlignLeft(SortedItems().ElementAt(r).Value[c].ToString(), Console.WindowWidth / _headers.Count));
                         }
 
                         Console.BackgroundColor = ConsoleColor.Black;
@@ -130,6 +158,8 @@ namespace playlist
                 {
                     Console.Write("[D] Delete selected");
                 }
+                Console.Write("  [S] Sort");
+                Console.Write("  [R] Change direction");
             }
             else
             {
@@ -154,12 +184,11 @@ namespace playlist
             }
         }
 
-
-        public ScreenResult OnInput(ConsoleKey key)
+        public ScreenResult OnInput(ConsoleKeyInfo key)
         {
             ScreenResult result;
 
-            switch (key)
+            switch (key.Key)
             {
 
                 case ConsoleKey.UpArrow:
@@ -187,13 +216,13 @@ namespace playlist
                     break;
 
                 case ConsoleKey.Spacebar:
-                    if (!selected.Contains(items.ElementAt(_cursorIndex).Key))
+                    if (!selected.Contains(SortedItems().ElementAt(_cursorIndex).Key))
                     {
-                        selected.Add(items.ElementAt(_cursorIndex).Key);
+                        selected.Add(SortedItems().ElementAt(_cursorIndex).Key);
                     }
                     else
                     {
-                        selected.Remove(items.ElementAt(_cursorIndex).Key);
+                        selected.Remove(SortedItems().ElementAt(_cursorIndex).Key);
                     }
                     result = new ScreenResult(ScreenResult.ResultType.Neutral, new object { });
                     break;
@@ -214,11 +243,10 @@ namespace playlist
                     {
                         if (selected.Count == 0)
                         {
-                            selected.Add(items.ElementAt(_cursorIndex).Key);
+                            selected.Add(SortedItems().ElementAt(_cursorIndex).Key);
                         }
 
                         result = new ScreenResult(ScreenResult.ResultType.EditOpen, selected[0]);
-
                     }
                     else
                     {
@@ -229,7 +257,7 @@ namespace playlist
                 case ConsoleKey.D:
                     if (selected.Count == 0)
                     {
-                        selected.Add(items.ElementAt(_cursorIndex).Key);
+                        selected.Add(SortedItems().ElementAt(_cursorIndex).Key);
                     }
 
                     // Fix cursor
@@ -247,6 +275,23 @@ namespace playlist
                     RemoveAll(s => selected.Contains(s));
 
                     selected.Clear();
+                    result = new ScreenResult(ScreenResult.ResultType.Neutral, new object { });
+                    break;
+
+                case ConsoleKey.S:
+                    if (_sortIndex == _headers.Count - 1)
+                    {
+                        _sortIndex = 0;
+                    }
+                    else
+                    {
+                        _sortIndex++;
+                    }
+                    result = new ScreenResult(ScreenResult.ResultType.Neutral, new object { });
+                    break;
+
+                case ConsoleKey.R:
+                    _sortASC = !_sortASC;
                     result = new ScreenResult(ScreenResult.ResultType.Neutral, new object { });
                     break;
 
