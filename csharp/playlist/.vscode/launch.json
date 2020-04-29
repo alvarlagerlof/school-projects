@@ -12,8 +12,8 @@
             "program": "${workspaceFolder}/bin/Debug/netcoreapp3.1/playlist.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopAtEntry": false
+            "console": "integratedTerminal",
+            "stopAtEntry": false,
         },
         {
             "name": ".NET Core Attach",

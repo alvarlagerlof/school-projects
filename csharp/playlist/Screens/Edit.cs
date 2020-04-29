@@ -14,7 +14,7 @@ namespace playlist
 
         public LaunchPayload OnActivate(LaunchPayload payload)
         {
-            Console.WriteLine("Hello from the edit screen");
+            Console.WriteLine("EDIT");
             Console.ReadKey();
             return new LaunchPayload(typeof(Playlist), new object { });
         }

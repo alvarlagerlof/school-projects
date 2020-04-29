@@ -23,6 +23,7 @@ namespace playlist
         {
             IScreen currentScreen = _screens.Find(screen => screen.GetType().Equals(prevData.NextScreen));
             LaunchPayload newData = currentScreen.OnActivate(prevData);
+            Console.Clear();
             Loop(newData);
         }
     }

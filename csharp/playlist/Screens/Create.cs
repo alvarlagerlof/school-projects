@@ -1,21 +1,22 @@
 using System;
+using System.Collections.Generic;
 
 namespace playlist
 {
-    class Playlist : IScreen
+    class Create : IScreen
     {
         PlaylistService _playlistService;
 
-        public Playlist(PlaylistService playlistService)
+        public Create(PlaylistService playlistService)
         {
             _playlistService = playlistService;
         }
 
         public LaunchPayload OnActivate(LaunchPayload payload)
         {
-            Console.WriteLine("Hello from the playlist screen");
+            Console.WriteLine("CREATE");
             Console.ReadKey();
-            return new LaunchPayload(typeof(Edit), new object { });
+            return new LaunchPayload(typeof(Playlist), new object { });
         }
     }
 }
