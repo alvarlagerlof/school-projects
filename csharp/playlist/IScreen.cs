@@ -6,7 +6,7 @@ namespace playlist
 {
     public interface IScreen
     {
-        void OnActivate();
+        void OnActivate(object data);
 
         ScreenResult OnInput(ConsoleKey key);
 

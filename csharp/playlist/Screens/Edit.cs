@@ -12,7 +12,7 @@ namespace playlist
             _playlistService = playlistService;
         }
 
-        public void OnActivate()
+        public void OnActivate(object data)
         {
             Console.WriteLine("EDIT");
             Console.ReadKey();

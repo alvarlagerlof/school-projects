@@ -20,6 +20,7 @@ namespace playlist
                 new List<Type> { typeof(Playlist), typeof(Edit), typeof(Create) }
             );
 
+            manager.SwitchScreen(typeof(Playlist), new object { });
             Loop();
 
         }
@@ -29,7 +30,5 @@ namespace playlist
             manager.OnInput(Console.ReadKey().Key);
             Loop();
         }
-
-
     }
 }

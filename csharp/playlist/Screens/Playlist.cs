@@ -13,41 +13,29 @@ namespace playlist
         {
             _playlistService = playlistService;
             _table = new ScrollingTable(
-                new List<string> { "Namn", "Artist", "Genre", "Längd" }
+                _playlistService,
+                new List<string> { "Name", "Artist", "Genre", "Length" }
             );
 
             foreach (Song song in _playlistService.GetAll())
             {
                 _table.AddItem(Guid.NewGuid().ToString(), new List<string> { song.Title, song.Artist, song.Genre, song.Playtime });
             }
-
-
         }
 
-        public void OnActivate()
+        public void OnActivate(object data)
         {
 
         }
 
         public ScreenResult OnInput(ConsoleKey key)
         {
-            Console.WriteLine("PLAYLIST");
+            if (key == ConsoleKey.Escape)
+            {
+                return new ScreenResult(ScreenResult.ResultType.GlobalExit, new object { });
+            }
 
-            // Console.Clear();
-            // _table.Render();
-
-            if (key == ConsoleKey.C)
-            {
-                return new ScreenResult(ScreenResult.ResultType.CreateOpen, new object { });
-            }
-            else if (key == ConsoleKey.E)
-            {
-                return new ScreenResult(ScreenResult.ResultType.EditOpen, new object { });
-            }
-            else
-            {
-                return new ScreenResult(ScreenResult.ResultType.Neutral, new object { });
-            }
+            return _table.OnInput(key);
         }
     }
 }
