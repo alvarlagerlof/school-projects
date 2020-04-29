@@ -6,84 +6,102 @@ namespace playlist
     class Program
     {
 
-        static ScrollingTable table;
+        // static ScrollingTable table;
+        // static List<Song> playlist = new List<Song> { };
+
 
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            List<Song> playlist = new List<Song> { };
-
-            table = new ScrollingTable(
-                new List<string> { "Namn", "Artist", "Genre", "Längd" },
-                new Dictionary<string, Action> { }
+            var playlistService = new PlaylistService();
+            var manager = new ScreenManager(
+                playlistService,
+                new List<Type> { typeof(Playlist), typeof(Edit) }
             );
 
-            table.AddItem(new List<string> { "Spring Of Home", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Imagine My Shadow", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Loving My Name", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Time Heart", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Pretty Machine", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Baby, Maybe Tomorrow", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Sweetie, This Love Of Mine", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "She's Crazy", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "He Thinks I Don't Care", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Date Of A Man", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Matter Of Stars", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Kiss My Way2", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Troubles Of His Music", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Man Machine", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Super Fever", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Babe, Remember Yesterday?", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "I Think I Like You", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "He Thinks I'm A Troublemaker", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "I Hope We Can't Stop", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Devil For You And I", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Angel", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Give Her Soul", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Open Up To Her Tears", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "More Romance", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Home Mind", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Honey, I'll Love You Forever", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Spring Of Home", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Imagine My Shadow", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Loving My Name", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Time Heart", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Pretty Machine", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Baby, Maybe Tomorrow", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Sweetie, This Love Of Mine", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "She's Crazy", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "He Thinks I Don't Care", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Date Of A Man", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Matter Of Stars", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Kiss My Way2", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Troubles Of His Music", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Man Machine", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Super Fever", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Babe, Remember Yesterday?", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "I Think I Like You", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "He Thinks I'm A Troublemaker", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "I Hope We Can't Stop", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Devil For You And I", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Angel", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Give Her Soul", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Open Up To Her Tears", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "More Romance", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Home Mind", "Various Artists", "Pop", "2:34" });
-            table.AddItem(new List<string> { "Honey, I'll Love You Forever", "Various Artists", "Pop", "2:34" });
+            // table = new ScrollingTable(
+            //     new List<string> { "Namn", "Artist", "Genre", "Längd" },
+            //     () =>
+            //     {
+            //         // TODO: Screen create
+            //     },
+            //     (string id) =>
+            //     {
+            //         // TODO: Screen edit
+            //     },
+            //     (List<string> ids) =>
+            //     {
+            //         playlist.RemoveAll(song => ids.Contains(song.ID));
+            //         table.RemoveAll(s => ids.Contains(s));
+            //     }
+            // );
 
-            table.Render();
-            Loop();
+            // playlist.Add(new Song("Spring Of Home", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Spring Of Home", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Imagine My Shadow", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Loving My Name", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Time Heart", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Pretty Machine", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Baby, Maybe Tomorrow", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Sweetie, This Love Of Mine", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("She's Crazy", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("He Thinks I Don't Care", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Date Of A Man", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Matter Of Stars", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Kiss My Way2", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Troubles Of His Music", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Man Machine", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Super Fever", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Babe, Remember Yesterday?", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("I Think I Like You", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("He Thinks I'm A Troublemaker", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("I Hope We Can't Stop", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Devil For You And I", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Angel", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Give Her Soul", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Open Up To Her Tears", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("More Romance", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Home Mind", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Honey, I'll Love You Forever", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Spring Of Home", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Imagine My Shadow", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Loving My Name", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Time Heart", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Pretty Machine", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Baby, Maybe Tomorrow", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Sweetie, This Love Of Mine", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("She's Crazy", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("He Thinks I Don't Care", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Date Of A Man", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Matter Of Stars", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Kiss My Way2", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Troubles Of His Music", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Man Machine", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Super Fever", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Babe, Remember Yesterday?", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("I Think I Like You", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("He Thinks I'm A Troublemaker", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("I Hope We Can't Stop", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Devil For You And I", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Angel", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Give Her Soul", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Open Up To Her Tears", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("More Romance", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Home Mind", "Various Artists", "Pop", "2:34"));
+            // playlist.Add(new Song("Honey, I'll Love You Forever", "Various Artists", "Pop", "2:34"));
+
+            // foreach (Song song in playlist)
+            // {
+            //     table.AddItem(Guid.NewGuid().ToString(), new List<string> { song.Title, song.Artist, song.Genre, song.Playtime });
+            // }
+
+            // //table.Render();
+            // screenManager.Loop();
 
         }
 
-        static void Loop()
-        {
-            ConsoleKeyInfo info = Console.ReadKey();
-            table.SendKey(info.Key);
-            table.Render();
-            Loop();
-        }
+
     }
 }

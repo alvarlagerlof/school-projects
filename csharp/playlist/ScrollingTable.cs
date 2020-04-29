@@ -6,24 +6,28 @@ namespace playlist
 {
     class ScrollingTable
     {
-        const char HORIZONTAL_LINE = '─';
-        const string VERTICAL_LINE = "│";
-
-        public ScrollingTable(List<string> headers, Dictionary<string, Action> actions)
-        {
-            Headers = headers;
-            Actions = actions;
-        }
-
-        public static List<string> Headers { get; set; } = default!;
-        public static Dictionary<string, Action> Actions { get; set; } = default!;
-
+        const char HorizontalLine = '─';
+        const string VerticalLine = "│";
 
         int topOffset = 0;
         int cursorIndex = 0;
-        List<int> selected = new List<int> { };
+        List<string> selected = new List<string> { };
+        Dictionary<string, List<string>> items = new Dictionary<string, List<string>> { };
 
-        List<List<string>> items = new List<List<string>> { };
+        static List<string> Headers;
+        static Action OnCreate;
+        static Action<List<string>> OnDelete;
+        static Action<string> OnEdit;
+
+        public ScrollingTable(List<string> headers, Action onCreate, Action<string> onEdit, Action<List<string>> onDelete)
+        {
+            Headers = headers;
+            OnCreate = onCreate;
+            OnEdit = onEdit;
+            OnDelete = onDelete;
+        }
+
+
 
         public void SendKey(ConsoleKey key)
         {
@@ -40,6 +44,7 @@ namespace playlist
                     }
 
                     break;
+
                 case ConsoleKey.UpArrow:
                     if (cursorIndex > 0)
                     {
@@ -52,35 +57,92 @@ namespace playlist
 
                     break;
                 case ConsoleKey.Spacebar:
-                    if (!selected.Contains(cursorIndex))
+                    if (!selected.Contains(items.ElementAt(cursorIndex).Key))
                     {
-                        selected.Add(cursorIndex);
+                        selected.Add(items.ElementAt(cursorIndex).Key);
                     }
                     else
                     {
-                        selected.RemoveAll(item => item == cursorIndex);
+                        selected.Remove(items.ElementAt(cursorIndex).Key);
                     }
                     break;
+
+                case ConsoleKey.C:
+
+                    if (selected.Count == 0)
+                    {
+                        OnCreate();
+                    }
+
+                    break;
+
+                case ConsoleKey.E:
+
+                    if (selected.Count <= 1)
+                    {
+                        if (selected.Count == 0)
+                        {
+                            selected.Add(items.ElementAt(cursorIndex).Key);
+                        }
+
+                        OnEdit(selected[0]);
+
+                    }
+
+                    break;
+
+
+
+                case ConsoleKey.D:
+
+                    if (selected.Count == 0)
+                    {
+                        selected.Add(items.ElementAt(cursorIndex).Key);
+                    }
+
+                    OnDelete(selected);
+
+                    // Fix cursor
+                    cursorIndex -= selected.Count;
+                    if (cursorIndex < 0) cursorIndex = 0;
+
+                    // Fix offset
+                    if (items.Count - (topOffset + Console.WindowHeight - 4) < 0)
+                    {
+                        topOffset += items.Count - (topOffset + Console.WindowHeight - 4);
+                        if (topOffset < 0) topOffset = 0;
+                    }
+
+                    selected.Clear();
+                    break;
+
+
+
+
             }
         }
 
-        public void AddItem(List<string> cols)
+        public void AddItem(String id, List<string> cols)
         {
-            items.Add(cols);
+            items.Add(id, cols);
         }
 
-        public void RemoveItem(int index)
+        public void RemoveAll(Predicate<string> predicate)
         {
-
+            foreach (KeyValuePair<string, List<string>> item in items)
+            {
+                if (predicate(item.Key))
+                {
+                    items.Remove(item.Key);
+                }
+            }
         }
 
         public void Render()
         {
             Console.Clear();
 
-
-            //Console.BackgroundColor = ConsoleColor.Gray;
-            //Console.ForegroundColor = ConsoleColor.Black;
+            // Headers and status
             Console.Write("  ");
             if (selected.Count > 0)
             {
@@ -93,19 +155,16 @@ namespace playlist
                     Console.Write(AlignLeft(header, Console.WindowWidth / Headers.Count));
                 }
             }
-
-
             Console.WriteLine();
-            //Console.BackgroundColor = ConsoleColor.Black;
-            //Console.ForegroundColor = ConsoleColor.White;
 
+            // Line
             for (int i = 0; i < Console.WindowWidth; i++)
             {
-                Console.Write(HORIZONTAL_LINE);
+                Console.Write(HorizontalLine);
             }
-
             Console.WriteLine();
 
+            // List
             for (int r = topOffset; r < items.Count() + topOffset; r++)
             {
 
@@ -119,9 +178,8 @@ namespace playlist
                         Console.BackgroundColor = ConsoleColor.Blue;
                     }
 
-                    if (selected.Contains(r))
+                    if (selected.Contains(items.ElementAt(r).Key))
                     {
-
                         Console.Write("✓ ");
                     }
                     else
@@ -129,9 +187,9 @@ namespace playlist
                         Console.Write("□ ");
                     }
 
-                    for (int c = 0; c < items[r].Count; c++)
+                    for (int c = 0; c < items.ElementAt(r).Value.Count; c++)
                     {
-                        Console.Write(AlignLeft(items[r][c], Console.WindowWidth / Headers.Count));
+                        Console.Write(AlignLeft(items.ElementAt(r).Value[c], Console.WindowWidth / Headers.Count));
                     }
 
                     Console.BackgroundColor = ConsoleColor.Black;
@@ -139,6 +197,26 @@ namespace playlist
                 }
 
             }
+
+            // Bottom Menu
+            Console.WriteLine();
+            if (selected.Count == 0)
+            {
+                Console.Write("[C] Create new");
+                Console.Write("  [E] Edit current");
+                Console.Write("  [D] Delete current");
+            }
+            else if (selected.Count == 1)
+            {
+                Console.Write("[E] Edit current");
+                Console.Write("  [D] Delete current");
+            }
+            else
+            {
+                Console.Write("[D] Delete selected");
+            }
+
+
         }
 
         static string AlignLeft(string text, int width)
@@ -151,7 +229,7 @@ namespace playlist
             }
             else
             {
-                return text.PadRight(width - Headers.Count, ' ') + VERTICAL_LINE + " ";
+                return text.PadRight(width - Headers.Count, ' ') + VerticalLine + " ";
             }
         }
     }
