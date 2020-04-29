@@ -26,7 +26,7 @@ namespace playlist
             _headers = headers;
             _onCreate = onCreate;
             _onEdit = onEdit;
-            _onDelete = onDelete;
+            _onDelete = onDelete; hej
 
         }
 
