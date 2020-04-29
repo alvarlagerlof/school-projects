@@ -14,23 +14,30 @@ namespace playlist
         List<string> selected = new List<string> { };
         Dictionary<string, List<string>> items = new Dictionary<string, List<string>> { };
 
-        static List<string> Headers;
-        static Action OnCreate;
-        static Action<List<string>> OnDelete;
-        static Action<string> OnEdit;
+        private List<string> _headers;
+        private Action _onCreate;
+
+        private Action<string> _onEdit;
+
+        private Action<List<string>> _onDelete;
 
         public ScrollingTable(List<string> headers, Action onCreate, Action<string> onEdit, Action<List<string>> onDelete)
         {
-            Headers = headers;
-            OnCreate = onCreate;
-            OnEdit = onEdit;
-            OnDelete = onDelete;
+            _headers = headers;
+            _onCreate = onCreate;
+            _onEdit = onEdit;
+            _onDelete = onDelete;
+
         }
 
 
 
         public void SendKey(ConsoleKey key)
         {
+
+            Console.WriteLine(key.ToString());
+
+
             switch (key)
             {
                 case ConsoleKey.DownArrow:
@@ -91,8 +98,6 @@ namespace playlist
 
                     break;
 
-
-
                 case ConsoleKey.D:
 
                     if (selected.Count == 0)
@@ -117,8 +122,6 @@ namespace playlist
                     break;
 
 
-
-
             }
         }
 
@@ -140,7 +143,6 @@ namespace playlist
 
         public void Render()
         {
-            Console.Clear();
 
             // Headers and status
             Console.Write("  ");

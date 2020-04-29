@@ -2,7 +2,7 @@ using System;
 
 namespace playlist
 {
-    class Song
+    public class Song
     {
 
         public string ID = Guid.NewGuid().ToString();

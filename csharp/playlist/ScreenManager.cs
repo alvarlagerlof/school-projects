@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace playlist
 {
@@ -16,14 +17,13 @@ namespace playlist
             }
 
 
-            Loop(new LaunchPayload(_screens[0].GetType(), new object { }));
+            Loop(new LaunchPayload(screens[0], new object { }));
         }
 
-        private void Loop(LaunchPayload prevData)
+        public void Loop(LaunchPayload prevData)
         {
             IScreen currentScreen = _screens.Find(screen => screen.GetType().Equals(prevData.NextScreen));
             LaunchPayload newData = currentScreen.OnActivate(prevData);
-            Console.Clear();
             Loop(newData);
         }
     }

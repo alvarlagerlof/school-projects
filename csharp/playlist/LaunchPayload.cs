@@ -6,11 +6,11 @@ namespace playlist
     {
 
         public Type NextScreen;
-        public object Payload;
-        public LaunchPayload(Type nextScreen, object payload)
+        public object Data;
+        public LaunchPayload(Type nextScreen, object data)
         {
             NextScreen = nextScreen;
-            Payload = payload;
+            Data = data;
         }
     }
 }

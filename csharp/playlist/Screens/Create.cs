@@ -5,7 +5,7 @@ namespace playlist
 {
     class Create : IScreen
     {
-        PlaylistService _playlistService;
+        private PlaylistService _playlistService;
 
         public Create(PlaylistService playlistService)
         {
