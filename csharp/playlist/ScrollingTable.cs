@@ -11,119 +11,56 @@ namespace playlist
 
         int topOffset = 0;
         int cursorIndex = 0;
-        List<string> selected = new List<string> { };
+        public List<string> selected = new List<string> { };
         Dictionary<string, List<string>> items = new Dictionary<string, List<string>> { };
 
         private List<string> _headers;
-        private Action _onCreate;
 
-        private Action<string> _onEdit;
-
-        private Action<List<string>> _onDelete;
-
-        public ScrollingTable(List<string> headers, Action onCreate, Action<string> onEdit, Action<List<string>> onDelete)
+        public ScrollingTable(List<string> headers)
         {
             _headers = headers;
-            _onCreate = onCreate;
-            _onEdit = onEdit;
-            _onDelete = onDelete; hej
-
         }
 
-
-
-        public void SendKey(ConsoleKey key)
+        public void MoveDown()
         {
 
-            Console.WriteLine(key.ToString());
-
-
-            switch (key)
+            if (cursorIndex > 0)
             {
-                case ConsoleKey.DownArrow:
-                    if (cursorIndex < items.Count - 1)
-                    {
-                        cursorIndex++;
-                        if (cursorIndex - topOffset == Console.WindowHeight - 5 && topOffset + Console.WindowHeight - 4 < items.Count)
-                        {
-                            topOffset += 1;
-                        }
-                    }
-
-                    break;
-
-                case ConsoleKey.UpArrow:
-                    if (cursorIndex > 0)
-                    {
-                        cursorIndex--;
-                        if (cursorIndex == topOffset && topOffset > 0)
-                        {
-                            topOffset -= 1;
-                        }
-                    }
-
-                    break;
-                case ConsoleKey.Spacebar:
-                    if (!selected.Contains(items.ElementAt(cursorIndex).Key))
-                    {
-                        selected.Add(items.ElementAt(cursorIndex).Key);
-                    }
-                    else
-                    {
-                        selected.Remove(items.ElementAt(cursorIndex).Key);
-                    }
-                    break;
-
-                case ConsoleKey.C:
-
-                    if (selected.Count == 0)
-                    {
-                        OnCreate();
-                    }
-
-                    break;
-
-                case ConsoleKey.E:
-
-                    if (selected.Count <= 1)
-                    {
-                        if (selected.Count == 0)
-                        {
-                            selected.Add(items.ElementAt(cursorIndex).Key);
-                        }
-
-                        OnEdit(selected[0]);
-
-                    }
-
-                    break;
-
-                case ConsoleKey.D:
-
-                    if (selected.Count == 0)
-                    {
-                        selected.Add(items.ElementAt(cursorIndex).Key);
-                    }
-
-                    OnDelete(selected);
-
-                    // Fix cursor
-                    cursorIndex -= selected.Count;
-                    if (cursorIndex < 0) cursorIndex = 0;
-
-                    // Fix offset
-                    if (items.Count - (topOffset + Console.WindowHeight - 4) < 0)
-                    {
-                        topOffset += items.Count - (topOffset + Console.WindowHeight - 4);
-                        if (topOffset < 0) topOffset = 0;
-                    }
-
-                    selected.Clear();
-                    break;
-
-
+                cursorIndex--;
+                if (cursorIndex == topOffset && topOffset > 0)
+                {
+                    topOffset -= 1;
+                }
             }
         }
+
+
+        public void MoveUp()
+        {
+            if (cursorIndex < items.Count - 1)
+            {
+                cursorIndex++;
+                if (cursorIndex - topOffset == Console.WindowHeight - 5 && topOffset + Console.WindowHeight - 4 < items.Count)
+                {
+                    topOffset += 1;
+                }
+            }
+        }
+
+        public void ToggleSelect()
+        {
+            if (!selected.Contains(items.ElementAt(cursorIndex).Key))
+            {
+                selected.Add(items.ElementAt(cursorIndex).Key);
+            }
+            else
+            {
+                selected.Remove(items.ElementAt(cursorIndex).Key);
+            }
+        }
+
+
+
 
         public void AddItem(String id, List<string> cols)
         {
@@ -152,9 +89,9 @@ namespace playlist
             }
             else
             {
-                foreach (string header in Headers)
+                foreach (string header in _headers)
                 {
-                    Console.Write(AlignLeft(header, Console.WindowWidth / Headers.Count));
+                    Console.Write(AlignLeft(header, Console.WindowWidth / _headers.Count));
                 }
             }
             Console.WriteLine();
@@ -191,7 +128,7 @@ namespace playlist
 
                     for (int c = 0; c < items.ElementAt(r).Value.Count; c++)
                     {
-                        Console.Write(AlignLeft(items.ElementAt(r).Value[c], Console.WindowWidth / Headers.Count));
+                        Console.Write(AlignLeft(items.ElementAt(r).Value[c], Console.WindowWidth / _headers.Count));
                     }
 
                     Console.BackgroundColor = ConsoleColor.Black;
@@ -221,7 +158,7 @@ namespace playlist
 
         }
 
-        static string AlignLeft(string text, int width)
+        private string AlignLeft(string text, int width)
         {
             text = text.Length > width ? text.Substring(0, width - 3) + "..." : text;
 
@@ -231,8 +168,64 @@ namespace playlist
             }
             else
             {
-                return text.PadRight(width - Headers.Count, ' ') + VerticalLine + " ";
+                return text.PadRight(width - _headers.Count, ' ') + VerticalLine + " ";
             }
         }
+
+
+        /*public void SendKey(ConsoleKey key)
+        {
+
+        /*switch (key)
+        {
+
+            case ConsoleKey.C:
+
+                if (selected.Count == 0)
+                {
+                    OnCreate();
+                }
+
+                break;
+
+            case ConsoleKey.E:
+                if (selected.Count <= 1)
+                {
+                    if (selected.Count == 0)
+                    {
+                        selected.Add(items.ElementAt(cursorIndex).Key);
+                    }
+
+                    OnEdit(selected[0]);
+
+                }
+
+                break;
+
+            case ConsoleKey.D:
+
+                if (selected.Count == 0)
+                {
+                    selected.Add(items.ElementAt(cursorIndex).Key);
+                }
+
+                OnDelete(selected);
+
+                // Fix cursor
+                cursorIndex -= selected.Count;
+                if (cursorIndex < 0) cursorIndex = 0;
+
+                // Fix offset
+                if (items.Count - (topOffset + Console.WindowHeight - 4) < 0)
+                {
+                    topOffset += items.Count - (topOffset + Console.WindowHeight - 4);
+                    if (topOffset < 0) topOffset = 0;
+                }
+
+                selected.Clear();
+                break;
+
+        }
+    }*/
     }
 }

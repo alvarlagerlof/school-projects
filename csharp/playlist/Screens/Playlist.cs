@@ -7,30 +7,13 @@ namespace playlist
     {
         private PlaylistService _playlistService;
         private ScrollingTable _table;
-        private LaunchPayload _returnPayload;
-        private bool _initialized;
-
 
 
         public Playlist(PlaylistService playlistService)
         {
             _playlistService = playlistService;
-            _returnPayload = null;
             _table = new ScrollingTable(
-                new List<string> { "Namn", "Artist", "Genre", "Längd" },
-                () =>
-                {
-                    _returnPayload = new LaunchPayload(typeof(Create), new object { });
-                },
-                (string id) =>
-                {
-                    _returnPayload = new LaunchPayload(typeof(Edit), new object { });
-                },
-                (List<string> ids) =>
-                {
-                    _playlistService.RemoveAll(id => ids.Contains(id));
-                    _table.RemoveAll(s => ids.Contains(s));
-                }
+                new List<string> { "Namn", "Artist", "Genre", "Längd" }
             );
 
             foreach (Song song in _playlistService.GetAll())
@@ -41,19 +24,30 @@ namespace playlist
 
         }
 
-        public LaunchPayload OnActivate(LaunchPayload payload)
+        public void OnActivate()
         {
-            if (_returnPayload != null)
+
+        }
+
+        public ScreenResult OnInput(ConsoleKey key)
+        {
+            Console.WriteLine("PLAYLIST");
+
+            // Console.Clear();
+            // _table.Render();
+
+            if (key == ConsoleKey.C)
             {
-                return _returnPayload;
+                return new ScreenResult(ScreenResult.ResultType.CreateOpen, new object { });
             }
-
-            _table.SendKey(Console.ReadKey().Key);
-            Console.Clear();
-            _table.Render();
-
-            return OnActivate(payload);
-
+            else if (key == ConsoleKey.E)
+            {
+                return new ScreenResult(ScreenResult.ResultType.EditOpen, new object { });
+            }
+            else
+            {
+                return new ScreenResult(ScreenResult.ResultType.Neutral, new object { });
+            }
         }
     }
 }

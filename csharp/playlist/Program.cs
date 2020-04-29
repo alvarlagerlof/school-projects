@@ -5,10 +5,8 @@ namespace playlist
 {
     class Program
     {
-
-        // static ScrollingTable table;
-        // static List<Song> playlist = new List<Song> { };
-
+        private static ScreenManager manager;
+        private static PlaylistService playlistService;
 
         static void Main(string[] args)
         {
@@ -16,11 +14,20 @@ namespace playlist
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            var playlistService = new PlaylistService();
-            var manager = new ScreenManager(
+            playlistService = new PlaylistService();
+            manager = new ScreenManager(
                 playlistService,
                 new List<Type> { typeof(Playlist), typeof(Edit), typeof(Create) }
             );
+
+            Loop();
+
+        }
+
+        static void Loop()
+        {
+            manager.OnInput(Console.ReadKey().Key);
+            Loop();
         }
 
 

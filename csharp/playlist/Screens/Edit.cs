@@ -12,11 +12,25 @@ namespace playlist
             _playlistService = playlistService;
         }
 
-        public LaunchPayload OnActivate(LaunchPayload payload)
+        public void OnActivate()
         {
             Console.WriteLine("EDIT");
             Console.ReadKey();
-            return new LaunchPayload(typeof(Playlist), new object { });
+        }
+
+        public ScreenResult OnInput(ConsoleKey key)
+        {
+            Console.WriteLine("EDIT");
+
+            if (key == ConsoleKey.Escape)
+            {
+                return new ScreenResult(ScreenResult.ResultType.EditExit, new object { });
+            }
+            else
+            {
+                return new ScreenResult(ScreenResult.ResultType.Neutral, new object { });
+            }
+
         }
     }
 }
