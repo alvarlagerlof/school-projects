@@ -1,4 +1,4 @@
-# 👨‍🎓 School Coding Exercise
+# 👨‍🎓 Coding Exercise
 
 Coding exercise for Programming 2 in Swedish highschool
 
